@@ -1,0 +1,17 @@
+{
+  "name": "react-native-media-query",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "css-mediaquery": "^0.1.2"
+  },
+  "author": "Rokas Kašinskas",
+  "license": "MIT"
+}
