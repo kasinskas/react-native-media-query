@@ -1,7 +1,7 @@
 {
   "name": "react-native-media-query",
   "version": "1.0.1",
-  "description": "",
+  "description": "Media queries for react-native and react-native-web",
   "main": "index",
   "directories": {
     "lib": "lib"
@@ -12,6 +12,23 @@
   "dependencies": {
     "css-mediaquery": "^0.1.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kasinskas/react-native-media-query.git"
+  },
+  "homepage": "https://github.com/kasinskas/react-native-media-query#readme",
+  "keywords": [
+    "react-native",
+    "react-native-web",
+    "react native",
+    "react native web",
+    "responsive",
+    "media-query",
+    "media",
+    "query",
+    "style",
+    "stylesheet"
+  ],
   "author": "Rokas Kašinskas",
   "license": "MIT"
 }

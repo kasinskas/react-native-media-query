@@ -1,5 +1,10 @@
 # react-native-media-query
 Adds support for media queries in react-native/react-native-web, triggers on device orientation changes and also works with next.js static generation or server-side rendering.
+# Installation
+
+`yarn add react-native-media-query`
+or
+`npm install react-native-media-query --save`
 # Usage
 ```javascript
 import { useMediaQuery } from 'react-native-media-query';
@@ -17,7 +22,8 @@ const styles = {
     }
 }
 
-const [ids, styles] = useMediaQuery('Component', styles);
+// for now css classes on web are being generated based on this ComponentIdentifier, so it shouldn't be the same in different files. Component name could be used. 
+const [ids, styles] = useMediaQuery('ComponentIdentifier', styles);
 
 ...
 
@@ -29,9 +35,9 @@ const [ids, styles] = useMediaQuery('Component', styles);
 
 ```
 
-# Next.js
+# react-native-web with next.js
 
-## _document.js
+Update your _document.js like example below. Further usage is exactly the same like shown above.
 
 ```javascript
 import Document, { Html, Head, Main, NextScript } from 'next/document';
