@@ -15,7 +15,7 @@ const createStyle = (stylesWithQuery) => {
             .map((query) => {
                 const css = createDeclarationBlock(stylesWithQuery[key][query]);
                 let str;
-                const hash = stringHash(`${key}${query}${css}`)
+                const hash = `rnmq-${stringHash(`${key}${query}${css}`)}`
                 if (isMedia(query)) {
                     str = `${query} {[data-media~="${hash}"] ${css}}`;
                 }
