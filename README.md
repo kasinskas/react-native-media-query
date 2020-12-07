@@ -28,10 +28,10 @@ const [ids, styles] = useMediaQuery('ComponentIdentifier', styles);
 ...
 
 // for react-native-web 0.13+
-<Component style={styles.example} dataSet={{ media: ids.controlIcon }} />
+<Component style={styles.example} dataSet={{ media: ids.example }} />
 
 // for older react-native-web
-<Component style={styles.example} data-media={ids.controlIcon} />
+<Component style={styles.example} data-media={ids.example} />
 
 ```
 
