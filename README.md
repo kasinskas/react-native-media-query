@@ -1,5 +1,5 @@
 # react-native-media-query
-Adds support for media queries in react-native/react-native-web, triggers on device orientation changes and also works with next.js static generation or server-side rendering.
+Adds support for media queries in react-native/react-native-web, `:hover` for react-native-web, triggers on device orientation changes and also works with next.js static generation or server-side rendering.
 # Installation
 
 `yarn add react-native-media-query`
@@ -22,8 +22,7 @@ const styles = {
     }
 }
 
-// for now css classes on web are being generated based on this ComponentIdentifier, so it shouldn't be the same in different files. Component name could be used. 
-const [ids, styles] = useMediaQuery('ComponentIdentifier', styles);
+const [ids, styles] = useMediaQuery(styles);
 
 ...
 
