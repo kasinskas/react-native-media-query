@@ -22,6 +22,7 @@ const styles = {
     }
 }
 
+// for now css classes on web are being generated based on this ComponentIdentifier, so it shouldn't be the same in different files. Component name could be used. 
 const [ids, styles] = useMediaQuery(styles);
 
 ...
