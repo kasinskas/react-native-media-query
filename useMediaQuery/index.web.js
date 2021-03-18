@@ -1,4 +1,4 @@
-import { setRule } from '../inject';
+import { setRule } from '../utils/inject';
 import createDeclarationBlock from '../utils/create-declaration-block';
 import {isHover, isMedia, filterQueriesFromStyles} from '../utils/common'
 

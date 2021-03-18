@@ -1,2 +1,2 @@
 export { useMediaQuery } from './useMediaQuery';
-export { flush } from './inject';
+export { flush } from './utils/inject';

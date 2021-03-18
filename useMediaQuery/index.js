@@ -1,6 +1,6 @@
 import { Dimensions } from 'react-native';
 import mediaQuery from 'css-mediaquery';
-import {isHover, isMedia, filterQueriesFromStyles} from '../utils/common'
+import {isMedia, filterQueriesFromStyles} from '../utils/common'
 
 const createStyle = (_, stylesWithQuery) => {
     let cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
