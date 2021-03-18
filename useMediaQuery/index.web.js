@@ -1,8 +1,6 @@
 import { setRule } from '../inject';
 import createDeclarationBlock from '../utils/create-declaration-block';
-
-const isMedia = (str) => str.indexOf('@media') === 0;
-const isHover = (str) => str.indexOf(':hover') === 0;
+import {isHover, isMedia, filterQueriesFromStyles} from '../utils/common'
 
 const createStyle = (id, stylesWithQuery) => {
     let ids = {};
@@ -10,18 +8,18 @@ const createStyle = (id, stylesWithQuery) => {
     const cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
     Object.keys(stylesWithQuery).map((key) => {
         const identifier = `${id}-${key}`;
+        const dataMediaSelector = `{[data-media~="${identifier}"]`
+        const queries = filterQueriesFromStyles(stylesWithQuery[key])
 
-        Object.keys(stylesWithQuery[key])
-            .filter((k) => isMedia(k) || isHover(k))
-            .map((query) => {
+        queries.map((query) => {
                 const css = createDeclarationBlock(stylesWithQuery[key][query]);
                 ids = { ...ids, [key]: identifier };
                 let str;
                 if (isMedia(query)) {
-                    str = `${query} {[data-media~="${identifier}"] ${css}}`;
+                    str = `${query} ${dataMediaSelector} ${css}}`;
                 }
                 if (isHover(query)) {
-                    str = `[data-media~="${identifier}"]${query} ${css}`;
+                    str = `${dataMediaSelector}${query} ${css}`;
                 }
 
                 setRule(`${identifier}`, str);
