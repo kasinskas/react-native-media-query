@@ -4,9 +4,13 @@ import {isHover, isMedia, filterQueriesFromStyles} from '../utils/common'
 
 const createStyle = (id, stylesWithQuery) => {
     let ids = {};
-
-    const cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
+    const cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery || {}));
+    
     Object.keys(stylesWithQuery).map((key) => {
+        if (!stylesWithQuery?.[key]) {
+            return
+        }
+        
         const identifier = `${id}-${key}`;
         const dataMediaSelector = `{[data-media~="${identifier}"]`
         const queries = filterQueriesFromStyles(stylesWithQuery[key])

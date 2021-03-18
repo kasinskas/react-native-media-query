@@ -3,17 +3,23 @@ import mediaQuery from 'css-mediaquery';
 import {isMedia, filterQueriesFromStyles} from '../utils/common'
 
 const createStyle = (_, stylesWithQuery) => {
-    let cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
+    let cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery || {}));
+
     Object.keys(stylesWithQuery).map((key) => {
+        if (!stylesWithQuery?.[key]) {
+            return
+        }
+        
         const queries = filterQueriesFromStyles(stylesWithQuery[key])
 
         queries.map((str) => {
                 if (isMedia(str)) {
                     const mqStr = str.replace('@media', '');
-                    const isMatch = mediaQuery.match(mqStr, {
+                    const isWidthMatchingMediaQuery = mediaQuery.match(mqStr, {
                         width: Dimensions.get('window').width,
                     });
-                    if (isMatch) {
+
+                    if (isWidthMatchingMediaQuery) {
                         cleanStyles = {
                             ...cleanStyles,
                             [key]: { ...cleanStyles[key], ...stylesWithQuery[key][str] },
