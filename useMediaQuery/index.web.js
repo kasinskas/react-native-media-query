@@ -1,37 +1,37 @@
 import { setRule } from '../inject';
 import createDeclarationBlock from '../utils/create-declaration-block';
-import stringHash from "string-hash"
 
 const isMedia = (str) => str.indexOf('@media') === 0;
 const isHover = (str) => str.indexOf(':hover') === 0;
 
-const createStyle = (stylesWithQuery) => {
+const createStyle = (id, stylesWithQuery) => {
     let ids = {};
 
     const cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
     Object.keys(stylesWithQuery).map((key) => {
+        const identifier = `${id}-${key}`;
+
         Object.keys(stylesWithQuery[key])
             .filter((k) => isMedia(k) || isHover(k))
             .map((query) => {
                 const css = createDeclarationBlock(stylesWithQuery[key][query]);
+                ids = { ...ids, [key]: identifier };
                 let str;
-                const hash = stringHash(`${key}${query}${css}`)
                 if (isMedia(query)) {
-                    str = `${query} {[data-media~="${hash}"] ${css}}`;
+                    str = `${query} {[data-media~="${identifier}"] ${css}}`;
                 }
                 if (isHover(query)) {
-                    str = `[data-media~="${hash}"]${query} ${css}`;
+                    str = `[data-media~="${identifier}"]${query} ${css}`;
                 }
-                ids = { ...ids, [key]: hash };
 
-                setRule(`${hash}`, str);
+                setRule(`${identifier}`, str);
                 delete cleanStyles[key][query];
             });
     });
     return { ids, cleanStyles };
 };
 
-export const useMediaQuery = (stylesWithQuery) => {
-    const { ids, cleanStyles } = createStyle(stylesWithQuery);
+export const useMediaQuery = (id, stylesWithQuery) => {
+    const { ids, cleanStyles } = createStyle(id, stylesWithQuery);
     return [ids, cleanStyles];
 };

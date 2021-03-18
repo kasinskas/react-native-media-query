@@ -4,7 +4,7 @@ import mediaQuery from 'css-mediaquery';
 const isMedia = (str) => str.indexOf('@media') === 0;
 const isHover = (str) => str.indexOf(':hover') === 0;
 
-const createStyle = (stylesWithQuery) => {
+const createStyle = (_, stylesWithQuery) => {
     let cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
     Object.keys(stylesWithQuery).map((key) => {
         Object.keys(stylesWithQuery[key])
@@ -29,7 +29,7 @@ const createStyle = (stylesWithQuery) => {
     return cleanStyles;
 };
 
-export const useMediaQuery = (stylesWithQuery) => {
-    const styles = createStyle(stylesWithQuery);
+export const useMediaQuery = (_, stylesWithQuery) => {
+    const styles = createStyle(_, stylesWithQuery);
     return [{}, styles];
 };
