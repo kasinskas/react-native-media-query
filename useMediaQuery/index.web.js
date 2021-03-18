@@ -10,9 +10,9 @@ const createStyle = (id, stylesWithQuery) => {
         if (!stylesWithQuery?.[key]) {
             return
         }
-        
+
         const identifier = `${id}-${key}`;
-        const dataMediaSelector = `{[data-media~="${identifier}"]`
+        const dataMediaSelector = `[data-media~="${identifier}"]`
         const queries = filterQueriesFromStyles(stylesWithQuery[key])
 
         queries.map((query) => {
@@ -20,7 +20,7 @@ const createStyle = (id, stylesWithQuery) => {
                 ids = { ...ids, [key]: identifier };
                 let str;
                 if (isMedia(query)) {
-                    str = `${query} ${dataMediaSelector} ${css}}`;
+                    str = `${query} {${dataMediaSelector} ${css}}`;
                 }
                 if (isHover(query)) {
                     str = `${dataMediaSelector}${query} ${css}`;
