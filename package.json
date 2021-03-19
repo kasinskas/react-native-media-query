@@ -1,6 +1,6 @@
 {
   "name": "react-native-media-query",
-  "version": "1.0.4-alpha.1",
+  "version": "1.0.4-alpha.2",
   "description": "Media queries for react-native and react-native-web",
   "main": "index",
   "directories": {
