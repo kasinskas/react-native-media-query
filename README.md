@@ -7,7 +7,7 @@ or
 `npm install react-native-media-query --save`
 # Usage
 ```javascript
-import { useMediaQuery } from 'react-native-media-query';
+import StyleSheet from 'react-native-media-query';
 
 //note that StyleSheet.create shouldn't be used here
 const styles = {
@@ -22,8 +22,8 @@ const styles = {
     }
 }
 
-// for now css classes on web are being generated based on this ComponentIdentifier, so it shouldn't be the same in different files. Component name could be used. 
-const [ids, styles] = useMediaQuery(styles);
+// for now css media queries on web are being generated based on this ComponentIdentifier, so it shouldn't be the same in different files. Component name could be used. 
+const {ids, styles} = StyleSheet.create(styles, 'HomeScreen');
 
 ...
 

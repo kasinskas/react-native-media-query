@@ -2,10 +2,9 @@ import { setRule } from '../utils/inject';
 import createDeclarationBlock from '../utils/create-declaration-block';
 import {isHover, isMedia, filterQueriesFromStyles} from '../utils/common'
 
-const createStyle = (id, stylesWithQuery) => {
+const createStyle =  (stylesWithQuery = {}, id = "") => {
     let ids = {};
-    const cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery || {}));
-    
+    const cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
     Object.keys(stylesWithQuery).map((key) => {
         if (!stylesWithQuery?.[key]) {
             return
@@ -16,6 +15,7 @@ const createStyle = (id, stylesWithQuery) => {
         const queries = filterQueriesFromStyles(stylesWithQuery[key])
 
         queries.map((query) => {
+            if (id){
                 const css = createDeclarationBlock(stylesWithQuery[key][query]);
                 ids = { ...ids, [key]: identifier };
                 let str;
@@ -26,14 +26,14 @@ const createStyle = (id, stylesWithQuery) => {
                     str = `${dataMediaSelector}${query} ${css}`;
                 }
 
-                setRule(`${identifier}`, str);
+                setRule(`${identifier}`, str);}
                 delete cleanStyles[key][query];
             });
     });
-    return { ids, cleanStyles };
+    return { ids, cleanStyles, fullStyles: stylesWithQuery };
 };
 
-export const useMediaQuery = (id, stylesWithQuery) => {
-    const { ids, cleanStyles } = createStyle(id, stylesWithQuery);
-    return [ids, cleanStyles];
+export const useMediaQuery = (stylesWithQuery, id) => {
+    const { ids, cleanStyles, fullStyles } = createStyle(stylesWithQuery, id);
+    return { ids, styles: cleanStyles, fullStyles };
 };

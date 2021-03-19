@@ -2,8 +2,8 @@ import { Dimensions } from 'react-native';
 import mediaQuery from 'css-mediaquery';
 import {isMedia, filterQueriesFromStyles} from '../utils/common'
 
-const createStyle = (_, stylesWithQuery) => {
-    let cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery || {}));
+const createStyle = (stylesWithQuery = {}, _) => {
+    let cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
 
     Object.keys(stylesWithQuery).map((key) => {
         if (!stylesWithQuery?.[key]) {
@@ -30,10 +30,10 @@ const createStyle = (_, stylesWithQuery) => {
                 delete cleanStyles[key][str];
             });
     });
-    return cleanStyles;
+    return { cleanStyles, fullStyles: stylesWithQuery };
 };
 
-export const useMediaQuery = (_, stylesWithQuery) => {
-    const styles = createStyle(_, stylesWithQuery);
-    return [{}, styles];
+export const useMediaQuery = (stylesWithQuery, _) => {
+    const {cleanStyles, fullStyles} = createStyle(stylesWithQuery, _);
+    return { ids: {}, styles: cleanStyles, fullStyles };
 };
