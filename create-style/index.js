@@ -30,10 +30,7 @@ const createStyle = (stylesWithQuery = {}) => {
       delete cleanStyles[key][str];
     });
   });
-  return { cleanStyles, fullStyles: stylesWithQuery };
+  return { ids: {}, cleanStyles, fullStyles: stylesWithQuery };
 };
 
-export const useMediaQuery = (stylesWithQuery) => {
-  const { cleanStyles, fullStyles } = createStyle(stylesWithQuery);
-  return { ids: {}, styles: cleanStyles, fullStyles };
-};
+export default createStyle;

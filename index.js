@@ -1,9 +1,9 @@
-import { useMediaQuery } from "./useMediaQuery";
+import createStyle from "./create-style";
 
 const flush = () => {};
 
 const StyleSheet = {
-  create: (stylesWithQuery) => useMediaQuery(stylesWithQuery),
+  create: createStyle,
 };
 
 export { flush, useMediaQuery, StyleSheet };
