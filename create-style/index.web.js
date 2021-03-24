@@ -1,7 +1,7 @@
 import { addCss } from "../utils/inject";
 import createDeclarationBlock from "../utils/create-declaration-block";
 import hash from "../hash";
-import { isMedia, filterQueriesFromStyles } from "../utils/common";
+import { isMedia, isPseudo } from "../utils/common";
 
 const createStyle = (stylesWithQuery) => {
   let ids = {};
@@ -12,9 +12,10 @@ const createStyle = (stylesWithQuery) => {
       return;
     }
 
-    const queries = filterQueriesFromStyles(stylesWithQuery[key]);
+    const mediaQueriesAndPseudoClasses = Object.keys(stylesWithQuery[key]).filter((k) => isMedia(k) || isPseudo(k))
 
-    queries.map((query) => {
+    mediaQueriesAndPseudoClasses.map((query) => {
+      let rule;
       const css = createDeclarationBlock(stylesWithQuery[key][query]);
       const stringHash = `rnmq-${hash(`${key}${query}${css}`)}`;
       const dataMediaSelector = `[data-media~="${stringHash}"]`;
@@ -23,14 +24,14 @@ const createStyle = (stylesWithQuery) => {
         ...ids,
         [key]: `${ids?.[key] ? ids[key] + " " : ""}${stringHash}`,
       };
-      let str;
+      
       if (isMedia(query)) {
-        str = `${query} {${dataMediaSelector} ${css}}`;
+        rule = `${query} {${dataMediaSelector} ${css}}`;
       } else {
-        str = `${dataMediaSelector}${query} ${css}`;
+        rule = `${dataMediaSelector}${query} ${css}`;
       }
 
-      addCss(`${stringHash}`, str);
+      addCss(`${stringHash}`, rule);
       delete cleanStyles[key][query];
     });
   });

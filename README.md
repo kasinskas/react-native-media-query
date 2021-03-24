@@ -1,5 +1,5 @@
 # react-native-media-query
-Adds support for media queries in react-native/react-native-web, `:hover` for react-native-web, triggers on device orientation changes and also works with next.js static generation or server-side rendering.
+Adds support for media queries in react-native/react-native-web and `:hover` + other pseudo classes for react-native-web. Triggers on device orientation changes and also works with next.js static generation or server-side rendering.
 # Installation
 
 `yarn add react-native-media-query`
@@ -9,8 +9,7 @@ or
 ```javascript
 import StyleSheet from 'react-native-media-query';
 
-//note that StyleSheet.create shouldn't be used here
-const styles = {
+const {ids, styles} = StyleSheet.create({
     example: {
         backgroundColor: 'green',
         '@media (max-width: 1600px)': {
@@ -20,10 +19,7 @@ const styles = {
             backgroundColor: 'blue',
         },
     }
-}
-
-// for now css media queries on web are being generated based on this ComponentIdentifier, so it shouldn't be the same in different files. Component name could be used. 
-const {ids, styles} = StyleSheet.create(styles, 'HomeScreen');
+})
 
 ...
 
@@ -42,7 +38,7 @@ Update your _document.js like example below. Further usage is exactly the same l
 ```javascript
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import React from 'react';
-import { flush as rnmq } from 'react-native-media-query';
+import { flush } from 'react-native-media-query';
 import { AppRegistry } from 'react-native-web';
 
 export default class CustomDocument extends Document {
@@ -51,7 +47,7 @@ export default class CustomDocument extends Document {
         const { getStyleElement } = AppRegistry.getApplication('Main');
         const styles = [
             getStyleElement(),
-            rnmq(),
+            flush(),
         ];
         return { ...renderPage(), styles: React.Children.toArray(styles) };
     }

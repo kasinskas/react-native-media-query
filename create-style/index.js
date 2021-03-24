@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
 import mediaQuery from "css-mediaquery";
-import { isMedia, filterQueriesFromStyles } from "../utils/common";
+import { isMedia, isPseudo } from "../utils/common";
 
 const createStyle = (stylesWithQuery = {}) => {
   let cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
@@ -10,9 +10,9 @@ const createStyle = (stylesWithQuery = {}) => {
       return;
     }
 
-    const queries = filterQueriesFromStyles(stylesWithQuery[key]);
+    const mediaQueriesAndPseudoClasses = Object.keys(stylesWithQuery[key]).filter((k) => isMedia(k) || isPseudo(k))
 
-    queries.map((str) => {
+    mediaQueriesAndPseudoClasses.map((str) => {
       if (isMedia(str)) {
         const mqStr = str.replace("@media", "");
         const isWidthMatchingMediaQuery = mediaQuery.match(mqStr, {
