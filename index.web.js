@@ -5,5 +5,5 @@ const StyleSheet = {
   create: createStyle
 };
 
-export { flush, useMediaQuery, StyleSheet };
+export { flush };
 export default StyleSheet;
