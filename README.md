@@ -1,5 +1,19 @@
-# react-native-media-query
-Adds support for media queries in react-native/react-native-web, which allows you to write styles once and reuse them between different platforms and form-factors, such as web, smart tvs, mobiles, tablets and native tvs.
+<h1 align="center">
+    react-native-media-query
+</h1>
+
+<p align="center">
+  <strong>Write once, use anywhere:</strong><br>
+  Media queries for react-native and react-native-web
+</p>
+
+<p align="center">
+    <a href="https://www.npmjs.org/package/react-native-media-query">
+        <img src="https://img.shields.io/npm/v/react-native-media-query?color=brightgreen&label=npm%20package" alt="Current npm package version." />
+    </a>
+</p>
+
+Adds support for media queries in react-native and react-native-web, which allows you to reuse styles between different platforms and form-factors, such as web, smart tvs, mobiles, tablets and native tvs.
 
 
 Triggers on device orientation changes and also works with next.js static generation or server-side rendering. Since `react-native-media-query` creates css based media queries on web, it allows you to easily avoid flash of unstyled (or incorrectly styled) content on initial load.
@@ -17,7 +31,7 @@ import StyleSheet from 'react-native-media-query';
 const {ids, styles} = StyleSheet.create({
     example: {
         backgroundColor: 'green',
-        '@media (max-width: 1600px)': {
+        '@media (max-width: 1600px) and (min-width: 800px)': {
             backgroundColor: 'red',
         },
         '@media (max-width: 800px)': {
