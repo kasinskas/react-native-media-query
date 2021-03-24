@@ -1,39 +1,39 @@
-import { Dimensions } from 'react-native';
-import mediaQuery from 'css-mediaquery';
-import {isMedia, filterQueriesFromStyles} from '../utils/common'
+import { Dimensions } from "react-native";
+import mediaQuery from "css-mediaquery";
+import { isMedia, filterQueriesFromStyles } from "../utils/common";
 
-const createStyle = (stylesWithQuery = {}, _) => {
-    let cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
+const createStyle = (stylesWithQuery = {}) => {
+  let cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
 
-    Object.keys(stylesWithQuery).map((key) => {
-        if (!stylesWithQuery?.[key]) {
-            return
+  Object.keys(stylesWithQuery).map((key) => {
+    if (!stylesWithQuery?.[key]) {
+      return;
+    }
+
+    const queries = filterQueriesFromStyles(stylesWithQuery[key]);
+
+    queries.map((str) => {
+      if (isMedia(str)) {
+        const mqStr = str.replace("@media", "");
+        const isWidthMatchingMediaQuery = mediaQuery.match(mqStr, {
+          width: Dimensions.get("window").width,
+        });
+
+        if (isWidthMatchingMediaQuery) {
+          cleanStyles = {
+            ...cleanStyles,
+            [key]: { ...cleanStyles[key], ...stylesWithQuery[key][str] },
+          };
         }
-        
-        const queries = filterQueriesFromStyles(stylesWithQuery[key])
+      }
 
-        queries.map((str) => {
-                if (isMedia(str)) {
-                    const mqStr = str.replace('@media', '');
-                    const isWidthMatchingMediaQuery = mediaQuery.match(mqStr, {
-                        width: Dimensions.get('window').width,
-                    });
-
-                    if (isWidthMatchingMediaQuery) {
-                        cleanStyles = {
-                            ...cleanStyles,
-                            [key]: { ...cleanStyles[key], ...stylesWithQuery[key][str] },
-                        };
-                    }
-                }
-
-                delete cleanStyles[key][str];
-            });
+      delete cleanStyles[key][str];
     });
-    return { cleanStyles, fullStyles: stylesWithQuery };
+  });
+  return { cleanStyles, fullStyles: stylesWithQuery };
 };
 
-export const useMediaQuery = (stylesWithQuery, _) => {
-    const {cleanStyles, fullStyles} = createStyle(stylesWithQuery, _);
-    return { ids: {}, styles: cleanStyles, fullStyles };
+export const useMediaQuery = (stylesWithQuery) => {
+  const { cleanStyles, fullStyles } = createStyle(stylesWithQuery);
+  return { ids: {}, styles: cleanStyles, fullStyles };
 };

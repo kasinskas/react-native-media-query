@@ -1,9 +1,9 @@
-import { useMediaQuery } from './useMediaQuery';
-import { flush } from './utils/inject';
+import { useMediaQuery } from "./useMediaQuery";
+import { flush } from "./utils/inject";
 
 const StyleSheet = {
-    create: (stylesWithQuery, id) => useMediaQuery(stylesWithQuery, id )
-}
+  create: (id, stylesWithQuery) => useMediaQuery(id, stylesWithQuery),
+};
 
-export { flush, useMediaQuery, StyleSheet }
-export default StyleSheet
+export { flush, useMediaQuery, StyleSheet };
+export default StyleSheet;

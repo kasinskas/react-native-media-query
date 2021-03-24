@@ -1,39 +1,41 @@
-import { setRule } from '../utils/inject';
-import createDeclarationBlock from '../utils/create-declaration-block';
-import {isHover, isMedia, filterQueriesFromStyles} from '../utils/common'
+import { addCss } from "../utils/inject";
+import createDeclarationBlock from "../utils/create-declaration-block";
+import hash from "../hash";
+import { isHover, isMedia, filterQueriesFromStyles } from "../utils/common";
 
-const createStyle =  (stylesWithQuery = {}, id = "") => {
-    let ids = {};
-    const cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
-    Object.keys(stylesWithQuery).map((key) => {
-        if (!stylesWithQuery?.[key]) {
-            return
-        }
+const createStyle = (stylesWithQuery) => {
+  let ids = {};
+  const cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
 
-        const identifier = `${id}-${key}`;
-        const dataMediaSelector = `[data-media~="${identifier}"]`
-        const queries = filterQueriesFromStyles(stylesWithQuery[key])
+  Object.keys(stylesWithQuery).map((key) => {
+    if (!stylesWithQuery?.[key]) {
+      return;
+    }
 
-        queries.map((query) => {
-            if (id){
-                const css = createDeclarationBlock(stylesWithQuery[key][query]);
-                ids = { ...ids, [key]: identifier };
-                let str;
-                if (isMedia(query)) {
-                    str = `${query} {${dataMediaSelector} ${css}}`;
-                }
-                if (isHover(query)) {
-                    str = `${dataMediaSelector}${query} ${css}`;
-                }
+    const queries = filterQueriesFromStyles(stylesWithQuery[key]);
 
-                setRule(`${identifier}`, str);}
-                delete cleanStyles[key][query];
-            });
+    queries.map((query) => {
+      const css = createDeclarationBlock(stylesWithQuery[key][query]);
+      const stringHash = `rnmq-${hash(`${key}${query}${css}`)}`;
+      const dataMediaSelector = `[data-media~="${stringHash}"]`;
+
+      ids = { ...ids, [key]: stringHash };
+      let str;
+      if (isMedia(query)) {
+        str = `${query} {${dataMediaSelector} ${css}}`;
+      }
+      if (isHover(query)) {
+        str = `${dataMediaSelector}${query} ${css}`;
+      }
+
+      addCss(`${stringHash}`, str);
+      delete cleanStyles[key][query];
     });
-    return { ids, cleanStyles, fullStyles: stylesWithQuery };
+  });
+  return { ids, cleanStyles, fullStyles: stylesWithQuery };
 };
 
-export const useMediaQuery = (stylesWithQuery, id) => {
-    const { ids, cleanStyles, fullStyles } = createStyle(stylesWithQuery, id);
-    return { ids, styles: cleanStyles, fullStyles };
+export const useMediaQuery = (stylesWithQuery) => {
+  const { ids, cleanStyles, fullStyles } = createStyle(stylesWithQuery);
+  return { ids, styles: cleanStyles, fullStyles };
 };
