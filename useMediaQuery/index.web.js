@@ -1,7 +1,7 @@
 import { addCss } from "../utils/inject";
 import createDeclarationBlock from "../utils/create-declaration-block";
 import hash from "../hash";
-import { isHover, isMedia, filterQueriesFromStyles } from "../utils/common";
+import { isMedia, filterQueriesFromStyles } from "../utils/common";
 
 const createStyle = (stylesWithQuery) => {
   let ids = {};
@@ -19,12 +19,14 @@ const createStyle = (stylesWithQuery) => {
       const stringHash = `rnmq-${hash(`${key}${query}${css}`)}`;
       const dataMediaSelector = `[data-media~="${stringHash}"]`;
 
-      ids = { ...ids, [key]: stringHash };
+      ids = {
+        ...ids,
+        [key]: `${ids?.[key] ? ids[key] + " " : ""}${stringHash}`,
+      };
       let str;
       if (isMedia(query)) {
         str = `${query} {${dataMediaSelector} ${css}}`;
-      }
-      if (isHover(query)) {
+      } else {
         str = `${dataMediaSelector}${query} ${css}`;
       }
 
