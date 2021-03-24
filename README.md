@@ -1,5 +1,10 @@
 # react-native-media-query
-Adds support for media queries in react-native/react-native-web and `:hover` + other pseudo classes for react-native-web. Triggers on device orientation changes and also works with next.js static generation or server-side rendering.
+Adds support for media queries in react-native/react-native-web, which allows you to write styles once and reuse them between different platforms and form-factors, such as web, smart tvs, mobiles, tablets and native tvs.
+
+
+Triggers on device orientation changes and also works with next.js static generation or server-side rendering. Since `react-native-media-query` creates css based media queries on web, it allows you to easily avoid flash of unstyled (or incorrectly styled) content on initial load.
+
+`:hover` and other pseudo classes should also work on web and other web based platforms, such as tizen, webOS and more. 
 # Installation
 
 `yarn add react-native-media-query`
@@ -33,7 +38,7 @@ const {ids, styles} = StyleSheet.create({
 
 # react-native-web with next.js
 
-Update your _document.js like example below. Further usage is exactly the same like shown above.
+Update your custom document (`pages/_document.js)` like in example below. Further usage is exactly the same as shown above.
 
 ```javascript
 import Document, { Html, Head, Main, NextScript } from 'next/document';
