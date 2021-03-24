@@ -30,7 +30,7 @@ const createStyle = (stylesWithQuery = {}) => {
       delete cleanStyles[key][str];
     });
   });
-  return { ids: {}, cleanStyles, fullStyles: stylesWithQuery };
+  return { ids: {}, styles: cleanStyles, fullStyles: stylesWithQuery };
 };
 
 export default createStyle;
