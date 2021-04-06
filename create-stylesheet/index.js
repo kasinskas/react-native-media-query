@@ -1,8 +1,10 @@
 import { Dimensions } from "react-native";
 import mediaQuery from "css-mediaquery";
-import { isMedia, isPseudo } from "../utils/common";
+import { isMedia, isMediaOrPseudo } from "../utils/common";
 
-const createStyle = (stylesWithQuery = {}) => {
+const createStyleSheet = (stylesWithQuery = {}) => {
+  if (!stylesWithQuery) return { ids: {}, styles: {}, fullStyles: {} };
+
   let cleanStyles = JSON.parse(JSON.stringify(stylesWithQuery));
 
   Object.keys(stylesWithQuery).map((key) => {
@@ -10,7 +12,9 @@ const createStyle = (stylesWithQuery = {}) => {
       return;
     }
 
-    const mediaQueriesAndPseudoClasses = Object.keys(stylesWithQuery[key]).filter((k) => isMedia(k) || isPseudo(k))
+    const mediaQueriesAndPseudoClasses = Object.keys(
+      stylesWithQuery[key]
+    ).filter(isMediaOrPseudo);
 
     mediaQueriesAndPseudoClasses.map((str) => {
       if (isMedia(str)) {
@@ -33,4 +37,4 @@ const createStyle = (stylesWithQuery = {}) => {
   return { ids: {}, styles: cleanStyles, fullStyles: stylesWithQuery };
 };
 
-export default createStyle;
+export default createStyleSheet;

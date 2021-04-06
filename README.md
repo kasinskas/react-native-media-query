@@ -64,11 +64,10 @@ export default class CustomDocument extends Document {
     static async getInitialProps({ renderPage }) {
         AppRegistry.registerComponent('Main', () => Main);
         const { getStyleElement } = AppRegistry.getApplication('Main');
-        const styles = [
-            getStyleElement(),
-            flush(),
-        ];
-        return { ...renderPage(), styles: React.Children.toArray(styles) };
+        const { html, head } = renderPage();
+
+        const styles = [ getStyleElement(), flush() ];
+        return { html, head, styles: React.Children.toArray(styles) };
     }
 
     render(){

@@ -1,8 +1,10 @@
-import createStyle from "./create-style";
+import createStyleSheet from "./create-stylesheet";
+import processStyleProp from './process-style-prop'
 import { flush } from "./utils/inject";
 
 const StyleSheet = {
-  create: createStyle
+  create: createStyleSheet,
+  process: processStyleProp
 };
 
 export { flush };
