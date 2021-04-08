@@ -16,9 +16,11 @@
 Adds support for media queries in react-native and react-native-web, which allows you to reuse styles between different platforms and form-factors, such as web, smart tvs, mobiles, tablets and native tvs.
 
 
-Triggers on device orientation changes and also works with next.js static generation or server-side rendering. Since `react-native-media-query` creates css based media queries on web, it allows you to easily avoid flash of unstyled (or incorrectly styled) content on initial load.
+This package also works with next.js static generation or server-side rendering. Since `react-native-media-query` creates css based media queries on web, it allows you to easily avoid flash of unstyled (or incorrectly styled) content on initial load.
 
 `:hover` and other pseudo classes should also work on web and other web based platforms, such as tizen, webOS and more. 
+
+To trigger media queries on device orientation changes for native platforms, for now you will most likely need to update the state, because `react-native-media-query` has no listeners inside. Simple `useWindowDimensions` from `react-native`, or similar should work. 
 # Installation
 
 `yarn add react-native-media-query`
@@ -27,9 +29,12 @@ or
 # Usage
 ```javascript
 import StyleSheet from 'react-native-media-query';
+import { View } from 'react-native'
 
 const {ids, styles} = StyleSheet.create({
     example: {
+        width: 100,
+        height: 100,
         backgroundColor: 'green',
         '@media (max-width: 1600px) and (min-width: 800px)': {
             backgroundColor: 'red',
@@ -42,11 +47,15 @@ const {ids, styles} = StyleSheet.create({
 
 ...
 
+// dataSet is only required for web
 // for react-native-web 0.13+
-<Component style={styles.example} dataSet={{ media: ids.example }} />
+<View style={styles.example} dataSet={{ media: ids.example }} />
 
 // for older react-native-web
-<Component style={styles.example} data-media={ids.example} />
+<View style={styles.example} data-media={ids.example} />
+// or if you want to use HTML tags for web only, it will also work
+<div style={styles.example} data-media={ids.example} />
+
 
 ```
 
