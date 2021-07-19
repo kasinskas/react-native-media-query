@@ -22,7 +22,7 @@ export const addCss = (id, text) => {
     rules[id].text = (rules[id]?.text || "") + text;
 
     if (styleSheet) {
-      styleSheet.insertRule(text);
+      styleSheet.insertRule(text, (Object.keys(rules).length-1));
     }
   }
 };
