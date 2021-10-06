@@ -3,7 +3,7 @@ import { ViewStyle, TextStyle, ImageStyle } from "react-native";
 
 type NamedStyles<T> = { [P in keyof T]: ViewStyle | TextStyle | ImageStyle };
 
-declare function create<
+export declare function create<
   UserStyles extends NamedStyles<UserStyles> | NamedStyles<any>
 >(
   styles: UserStyles | NamedStyles<UserStyles>
@@ -13,7 +13,7 @@ declare function create<
   ids: Record<keyof UserStyles, string>;
 };
 
-declare function process<
+export declare function process<
   UserStyles extends NamedStyles<UserStyles> | NamedStyles<any>
 >(
   styles: UserStyles | NamedStyles<UserStyles>
@@ -33,8 +33,3 @@ export function flush(): DetailedReactHTMLElement<
   },
   HTMLElement
 >;
-
-export default {
-  create,
-  process,
-};
