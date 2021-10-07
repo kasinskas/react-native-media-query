@@ -1,11 +1,12 @@
 {
   "name": "react-native-media-query",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Media queries for react-native and react-native-web",
   "main": "index",
   "directories": {
     "lib": "lib"
   },
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
