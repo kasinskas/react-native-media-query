@@ -1,6 +1,6 @@
 {
   "name": "react-native-media-query",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Media queries for react-native and react-native-web",
   "main": "index",
   "directories": {
@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "css-mediaquery": "^0.1.2"
+  },
+  "devDependencies": {
+    "@types/react-native": "^0.65.5"
   },
   "repository": {
     "type": "git",

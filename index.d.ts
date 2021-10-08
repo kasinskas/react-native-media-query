@@ -1,7 +1,7 @@
 import { DetailedReactHTMLElement } from "react";
 import { ViewStyle, TextStyle, ImageStyle } from "react-native";
 
-type NamedStyles<T> = { [P in keyof T]: ViewStyle | TextStyle | ImageStyle };
+export type NamedStyles<T> = { [P in keyof T]: ViewStyle | TextStyle | ImageStyle };
 
 export declare function create<
   UserStyles extends NamedStyles<UserStyles> | NamedStyles<any>
