@@ -1,7 +1,10 @@
 import { DetailedReactHTMLElement } from "react";
-import { ViewStyle, TextStyle, ImageStyle } from "react-native";
+import "react-native";
+import { ImageStyle, TextStyle, ViewStyle } from "react-native";
 
-export type NamedStyles<T> = { [P in keyof T]: ViewStyle | TextStyle | ImageStyle };
+export type NamedStyles<T> = {
+  [P in keyof T]: ViewStyle | TextStyle | ImageStyle;
+};
 
 export declare function create<
   UserStyles extends NamedStyles<UserStyles> | NamedStyles<any>
@@ -33,3 +36,19 @@ export function flush(): DetailedReactHTMLElement<
   },
   HTMLElement
 >;
+
+// Prop dataSet not available in typescript: https://github.com/necolas/react-native-web/issues/1668
+// Workaround fix implemented from: https://github.com/necolas/react-native-web/issues/1684#issuecomment-712297248
+declare module "react-native" {
+  interface ViewProps {
+    dataSet?: Record<string, string>;
+  }
+
+  interface TextProps {
+    dataSet?: Record<string, string>;
+  }
+
+  interface ImageProps {
+    dataSet?: Record<string, string>;
+  }
+}
