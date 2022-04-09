@@ -1,5 +1,5 @@
-import { Dimensions } from "react-native";
 import mediaQuery from "css-mediaquery";
+import { Dimensions } from "react-native";
 import { isMedia, isMediaOrPseudo } from "../utils/common";
 
 const createStyleSheet = (stylesWithQuery = {}) => {
@@ -19,11 +19,16 @@ const createStyleSheet = (stylesWithQuery = {}) => {
     mediaQueriesAndPseudoClasses.map((str) => {
       if (isMedia(str)) {
         const mqStr = str.replace("@media", "");
-        const isWidthMatchingMediaQuery = mediaQuery.match(mqStr, {
-          width: Dimensions.get("window").width,
+        const { width, height } = Dimensions.get("window");
+
+        const isMatchingMediaQuery = mediaQuery.match(mqStr, {
+          width,
+          height,
+          orientation: width > height ? "landscape" : "portrait",
+          "aspect-ratio": width / height,
         });
 
-        if (isWidthMatchingMediaQuery) {
+        if (isMatchingMediaQuery) {
           cleanStyles = {
             ...cleanStyles,
             [key]: { ...cleanStyles[key], ...stylesWithQuery[key][str] },
