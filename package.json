@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "css-mediaquery": "^0.1.2"
+    "css-mediaquery": "^0.1.2",
+    "react-native-web": "0.17.5"
   },
   "devDependencies": {
     "@types/react-native": "^0.65.5"
