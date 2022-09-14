@@ -1,11 +1,11 @@
 import createStyleSheet from "./create-stylesheet";
-import processStyleProp from './process-style-prop'
+import processStyleProp from "./process-style-prop";
 
 const flush = () => {};
 
 const StyleSheet = {
   create: createStyleSheet,
-  process: processStyleProp
+  process: processStyleProp,
 };
 
 export { flush };
