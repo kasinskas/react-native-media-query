@@ -29,7 +29,7 @@ or
 # Usage
 ```javascript
 import StyleSheet from 'react-native-media-query';
-import { View } from 'react-native'
+import { View, TextInput } from 'react-native'
 
 const {ids, styles} = StyleSheet.create({
     example: {
@@ -42,6 +42,20 @@ const {ids, styles} = StyleSheet.create({
         '@media (max-width: 800px)': {
             backgroundColor: 'blue',
         },
+    },
+    exampleTextInput: {
+        paddingVertical: 27,
+        backgroundColor: 'pink',
+        '@media (max-width: 768px)': {
+            paddingVertical: 13,
+        },
+        // example CSS selectors. these only work on web based platforms
+        '::placeholder': {
+            color: 'green',
+        },
+        ':hover': {
+            backgroundColor: 'red',
+        },
     }
 })
 
@@ -50,11 +64,20 @@ const {ids, styles} = StyleSheet.create({
 // dataSet is only required for web
 // for react-native-web 0.13+
 <View style={styles.example} dataSet={{ media: ids.example }} />
+<TextInput
+    style={styles.exampleTextInput}
+    dataSet={{ media: ids.exampleTextInput }}
+    placeholder="Search"
+    ...
+/>
+
 
 // for older react-native-web
 <View style={styles.example} data-media={ids.example} />
 // or if you want to use HTML tags for web only, it will also work
 <div style={styles.example} data-media={ids.example} />
+
+
 
 
 ```
