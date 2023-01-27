@@ -14,7 +14,9 @@ export type NamedStyles<T> = {
 
 type BaseStyle<UserStyles> = {
   [Element in keyof UserStyles]: {
-    [Property in keyof UserStyles[Element] as Property extends `@media${string}`
+    [Property in keyof UserStyles[Element] as Property extends
+      | `@media${string}`
+      | `:${string}`
       ? never
       : Property]: UserStyles[Element][Property];
   };
@@ -23,7 +25,9 @@ type BaseStyle<UserStyles> = {
 type ResponsiveStyle<UserStyles> = {
   [Element in keyof UserStyles]: {
     [P in {
-      [Property in keyof UserStyles[Element]]: Property extends `@media${string}`
+      [Property in keyof UserStyles[Element]]: Property extends
+        | `@media${string}`
+        | `:${string}`
         ? {
             [QueryProperty in keyof UserStyles[Element][Property]]: [
               QueryProperty,
