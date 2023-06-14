@@ -1,4 +1,26 @@
 import React from "react";
+import { createCompareFn, MOBILE_FIRST } from "./sort-css-media-queries";
+const compareFn = createCompareFn(MOBILE_FIRST);
+
+const findSortedIdx = (arr, item) => {
+  let start = 0;
+  let end = arr.length;
+
+  while (start < end) {
+    const mid = (start + end) >> 1;
+    const result = compareFn(item, arr[mid].cssText);
+
+    if (result === 0) {
+      return mid;
+    } else if (result < 0) {
+      end = mid;
+    } else {
+      start = mid + 1;
+    }
+  }
+
+  return end;
+};
 
 const rules = {};
 let styleSheet;
@@ -22,7 +44,8 @@ export const addCss = (id, text) => {
     rules[id].text = (rules[id]?.text || "") + text;
 
     if (styleSheet) {
-      styleSheet.insertRule(text, (Object.keys(rules).length-1));
+      const index = findSortedIdx([...styleSheet.cssRules], text);
+      styleSheet.insertRule(text, index);
     }
   }
 };
@@ -34,6 +57,7 @@ export const flush = () =>
     dangerouslySetInnerHTML: {
       __html: Object.keys(rules)
         .map((key) => rules[key].text)
+        .sort(compareFn)
         .join("\n"),
     },
   });
